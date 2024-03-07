@@ -6,25 +6,25 @@ from save.saveFile import ProjectSaver
 
 
 
-def pick_color():
+def colorPicker():
     if Global.shape is None:
         return 
     Global.shape.change_color()
 
-def size_shape(event):
+def shapeSize(event):
     if Global.resize is None:
         return
     Global.resize.resize_shape(event)
 
-def Move_Zome(event):
+def MoveAndZoom(event):
     if Global.move_and_zome is None:
         return
     Global.move_and_zome.start_move(event)  
 
-def save_proj():
+def saveProject():
     Save_project.save_project()
 
-def open_project():
+def openProject():
     openFile.open_project() 
 
 
@@ -41,17 +41,17 @@ window.config(menu=menubar)
 
 shapesMenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Shape", menu = shapesMenu)
-shapesMenu.add_command(label="Square", command=lambda: canvas.bind('<ButtonPress-1>', lambda event: square_drawer.draw_shape(event)))
-shapesMenu.add_command(label="Rectangle", command=lambda: canvas.bind('<ButtonPress-1>', lambda event: rectangle_drawer.draw_shape(event)))
-shapesMenu.add_command(label="Circle", command=lambda: canvas.bind('<ButtonPress-1>', lambda event: circle_drawer.draw_shape(event)))
-shapesMenu.add_command(label="Triangle", command=lambda: canvas.bind('<ButtonPress-1>', lambda event: triangle_drawer.draw_shape(event)))
+shapesMenu.add_command(label="Square", command=lambda: canvas.bind('<ButtonPress-1>', lambda event: squareDrawer.draw_shape(event)))
+shapesMenu.add_command(label="Rectangle", command=lambda: canvas.bind('<ButtonPress-1>', lambda event: rectangleDrawer.draw_shape(event)))
+shapesMenu.add_command(label="Circle", command=lambda: canvas.bind('<ButtonPress-1>', lambda event: circleDrawer.draw_shape(event)))
+shapesMenu.add_command(label="Triangle", command=lambda: canvas.bind('<ButtonPress-1>', lambda event: triangleDrawer.draw_shape(event)))
 shapesMenu.add_separator()
 shapesMenu.add_command(label="Exit")
 
 file_menu = Menu(menubar, tearoff=0,bg='#ffffff',fg='#000000')
 menubar.add_cascade(label='File', menu=file_menu)
-file_menu.add_command(label='Open', command=  open_project)
-file_menu.add_command(label='Save As', command= save_proj)
+file_menu.add_command(label='Open', command=  openProject)
+file_menu.add_command(label='Save As', command= saveProject)
 
 canvas = Canvas(frame, width=600, height=400, bg='grey')
 canvas.pack(fill=BOTH, expand=True)
@@ -59,11 +59,11 @@ canvas.pack(fill=BOTH, expand=True)
 
 selected_shape = None
 
-circle_drawer = CircleDrawer(canvas)
-square_drawer = SquareDrawer(canvas)
-triangle_drawer =TriangleDrawer(canvas)
-shape_deleter = ShapeDeleter(canvas)
-rectangle_drawer = RectangleDrawer(canvas)
+circleDrawer = CircleDrawer(canvas)
+squareDrawer = SquareDrawer(canvas)
+triangleDrawer =TriangleDrawer(canvas)
+shapeDeleter = ShapeDeleter(canvas)
+rectangleDrawer = RectangleDrawer(canvas)
 
 Save_project =  ProjectSaver(canvas)
 openFile = ProjectOpener(canvas)
@@ -71,12 +71,12 @@ openFile = ProjectOpener(canvas)
 
 
 
-window.bind('<BackSpace>', shape_deleter.delete_last_shape)
-window.bind('<KeyPress-Up>',size_shape)
-window.bind('<KeyPress-Down>',size_shape)
-window.bind('<KeyPress-Left>',size_shape)
-window.bind('<KeyPress-Right>',size_shape)
-window.bind('<ButtonPress-3>', Move_Zome)  
+window.bind('<BackSpace>', shapeDeleter.delete_last_shape)
+window.bind('<KeyPress-Up>',shapeSize)
+window.bind('<KeyPress-Down>',shapeSize)
+window.bind('<KeyPress-Left>',shapeSize)
+window.bind('<KeyPress-Right>',shapeSize)
+window.bind('<ButtonPress-3>', MoveAndZoom)  
 
 
 
